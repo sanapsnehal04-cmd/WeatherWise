@@ -1,0 +1,153 @@
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* =========================================
+   BODY THEME
+========================================= */
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode */
+body.light {
+  background-color: #c8bde0;
+  color: black;
+}
+
+/* Dark mode */
+body.dark {
+  background-color: #0f172a;
+  color: white;
+}
+
+/* =========================================
+   APP WRAPPER
+========================================= */
+
+.app {
+  min-height: 100vh;
+
+}
+
+/* =========================================
+   WEATHER CARD
+========================================= */
+
+.weather {
+  margin: 40px 0;
+  padding: 40px;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================================
+   WEATHER DISPLAY
+========================================= */
+
+.weather-icon {
+  width: 140px;
+  margin: 25px;
+}
+
+.temprature {
+  font-size: 70px;
+  line-height: 1;
+}
+
+.location {
+  font-size: 20px;
+}
+
+/* =========================================
+   WEATHER DATA
+========================================= */
+
+.weather-data {
+  width: 100%;
+  margin-top: 30px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-data .col {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 20px;
+}
+
+.weather-data .col span {
+  display: block;
+  font-size: 14px;
+}
+
+.weather-data .col img {
+  width: 24px;
+  margin-top: 5px;
+}
+
+/* Highlight */
+.bold-text {
+  color: #4facfe;
+}
+
+/* =========================================
+   LOADING SPINNER
+========================================= */
+
+.spinner {
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top: 4px solid #4facfe;
+  border-radius: 50%;
+
+  width: 40px;
+  height: 40px;
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   🌙 DARK MODE ADJUSTMENTS
+========================================= */
+
+body.dark .weather {
+  background: rgba(30, 41, 59, 0.4);
+}
+
+/* =========================================
+   📱 RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .weather {
+    padding: 25px;
+  }
+
+  .temprature {
+    font-size: 50px;
+  }
+
+}

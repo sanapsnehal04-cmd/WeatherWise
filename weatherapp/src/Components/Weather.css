@@ -1,0 +1,120 @@
+*{
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+button:hover {
+  background-color: #353535;
+  transform: scale(1);
+  transition: all 0.1s ease-in-out;
+}
+
+
+ /* body {
+  margin: 0;
+  background: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1400&q=80') no-repeat center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Poppins, sans-serif;
+}  */
+
+
+.app{
+  background-color: #c8bde0;
+  min-height: 100vh;
+  display: grid;
+  font-family:"Poppins",sans-serif;
+}
+.weather{
+  place-self:center;
+  padding: 50px;
+  padding: auto;
+  border-radius: 10px;
+  /* background-image: linear-gradient(45deg,#2f4680,#5001e4); */
+  background:#3c7376;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search-bar{
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  position:relative;
+}
+
+.search-bar input{
+  height: 50px;
+  border:none;
+  outline: none;
+  border-radius: 40px;
+  padding-left: 25px;
+  color: #626262;
+  background-color: #ebfffc;
+  font-size: 18px;
+  &:hover{
+  border: 0.5px solid yellow;
+}
+}
+.search-bar img{
+  width:25px;
+  padding: 15px;
+  border-radius:50%;
+  background: #ebfffc;
+  cursor: pointer;
+ 
+}
+.weather-icon{
+  width: 150px;
+  margin: 30px ;  
+}
+.temprature{
+  color: #fff;
+  font-size: 80px;
+  line-height: 1;
+}
+
+.location{
+  color:#fff;
+  font-size: xx-large;
+}
+.weather-data{
+  width:100%;
+  margin-top: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+.weather-data .col{
+  display: flex;
+  align-items:flex-start;
+  gap: 12px;
+  font-size: 22px;
+}
+.weather-data .col span{
+  display: block;
+  font-size: 16px;
+}
+.weather-data .col img{
+  width:26px ;
+  margin-top: 10px;
+}
+
+/* modebtn */
+.toggleBtn{
+margin-top: 15px;
+width: 30%;
+border: none;
+padding: 1%;
+border-radius: 25px;
+&:hover{
+  border: 0.1em solid yellow;
+  cursor: pointer; 
+  color: wheat;
+  }
+}
+
+

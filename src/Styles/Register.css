@@ -1,0 +1,251 @@
+/* =========================================
+   REGISTER PAGE (ALIGNED WITH LOGIN)
+========================================= */
+* {
+  transition: 
+    background 0.4s ease,
+    color 0.4s ease,
+    border 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* 🌊 Background */
+.register-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.5s ease;
+  background: linear-gradient(80deg, #ad61c9, #62a7be);
+}
+
+/* Subtle animated light */
+.register-container::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08), transparent),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05), transparent);
+
+  animation: moveBg 15s linear infinite;
+}
+
+@keyframes moveBg {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-30px,-30px); }
+  100% { transform: translate(0,0); }
+}
+
+/* 🌙 Dark Mode */
+.register-container.dark {
+  background: linear-gradient(120deg, #580e42, #0b1e4a);
+}
+
+.register-container.dark .mode-toggle button {
+  box-shadow: 0 0 10px rgba(56,189,248,0.5);
+}
+
+.register-container:not(.dark) .mode-toggle button {
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+.register-container.dark .mode-toggle button::before {
+  content: "🌙";
+  transform: translateX(0);
+}
+/* =========================================
+   MODE BUTTON (MATCH LOGIN)
+========================================= */
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+}
+
+.mode-toggle button {
+  position: relative;
+  width: 60px;
+  height: 32px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+}
+
+.mode-toggle button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.mode-toggle button:active {
+  transform: scale(0.95);
+}
+
+.mode-toggle button::before {
+  content: "🌙";
+  position: absolute;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+
+  transform: translateX(0);
+  transition: 0.4s ease;
+}
+
+/* =========================================
+   CARD
+========================================= */
+.register-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(61, 9, 86, 0.951);
+  backdrop-filter: blur(20px);
+  padding: 45px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* =========================================
+   TEXT
+========================================= */
+.reg-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  color: #d71a89fc;
+}
+
+.reg-subtitle {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  color: rgba(62, 165, 206, 0.871);
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.12);
+}
+
+/* Password eye */
+.toggle-eye {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* =========================================
+   PASSWORD RULES
+========================================= */
+.password-rules {
+  font-size: 2px;
+  margin-top: 8px;
+}
+
+.password-rules p {
+  color: #888;
+  font-size: 18px;
+}
+
+.password-rules .valid {
+  color: #22c55e;
+}
+
+/* Error text */
+.error {
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(90deg, #176b7a8a, #3b82f6);
+  color: white;
+  font-weight: 800;
+  font-size: 15px;
+
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   REDIRECT
+========================================= */
+.redirect {
+  text-align: center;
+  margin-top: 15px;
+  color: rgba(255,255,255,0.7);
+  font-size: 16px;
+}
+
+.redirect span {
+  color: #22d3ee;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.redirect span:hover {
+  text-decoration: underline;
+}

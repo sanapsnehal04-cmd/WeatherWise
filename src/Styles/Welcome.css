@@ -1,0 +1,432 @@
+/* =========================================
+   THEME VARIABLES
+========================================= */
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #4facfe, #00f2fe, #38bdf8);
+
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+
+  --card-bg: rgba(255,255,255,0.12);
+  --card-border: rgba(255,255,255,0.25);
+
+  --btn-bg: linear-gradient(135deg, #ffffff, #e0f7ff);
+  --btn-text: #0f172a;
+
+  --overlay: rgba(0,0,0,0.25);
+}
+
+body.dark {
+  --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+
+  --card-bg: rgba(15,23,42,0.7);
+  --card-border: rgba(255,255,255,0.08);
+
+  --btn-bg: linear-gradient(135deg, #1e293b, #334155);
+  --btn-text: #f8fafc;
+
+  --overlay: rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   GLOBAL TRANSITION
+========================================= */
+
+* {
+  transition: all 0.3s ease;
+}
+
+/* =========================================
+   PAGE BACKGROUND (ANIMATED)
+========================================= */
+
+.welcome-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  background: var(--bg-gradient);
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay);
+  z-index: 1;
+}
+
+/* =========================================
+   THEME TOGGLE
+========================================= */
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* =========================================
+   GLASS CARD
+========================================= */
+
+.welcome-container {
+  text-align: center;
+  z-index: 2;
+
+  padding: 45px 65px;
+  border-radius: 22px;
+
+  background: var(--card-bg);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--card-border);
+
+  box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+.main-title {
+  font-size: 50px;
+  font-weight: 700;
+  color: var(--text-primary);
+
+  animation: floatText 3s ease-in-out infinite;
+}
+
+.tagline {
+  font-size: 20px;
+  margin-top: 10px;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 15px;
+  margin: 15px 0 25px;
+  color: var(--text-secondary);
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.enter-btn {
+  padding: 14px 34px;
+  border-radius: 12px;
+  border: none;
+
+  background: var(--btn-bg);
+  color: var(--btn-text);
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.enter-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+/* =========================================
+   CLOUD LAYERS (INFINITE SYSTEM)
+========================================= */
+
+.cloud-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  z-index: 1;
+  width: 200%;
+  height: 100%;
+
+  display: flex;
+  justify-content: space-around;
+
+  animation: moveLayer 60s linear infinite;
+}
+
+/* Second layer starts midway */
+.layer2 {
+  animation-delay: -30s;
+}
+
+/* =========================================
+   CLOUD DESIGN (NO absolute positioning here)
+========================================= */
+
+.cloud-layer .cloud {
+  width: 140px;
+  height: 70px;
+
+  background: #fff;
+  border-radius: 50px;
+
+  box-shadow:
+    30px 10px 0 #fff,
+    60px 0px 0 #fff,
+    90px 15px 0 #fff;
+
+  opacity: 0.6;
+  animation: floatCloud 6s ease-in-out infinite;
+
+}
+
+/* Different vertical placement */
+.cloud-layer .cloud:nth-child(1) { margin-top: 10%; }
+.cloud-layer .cloud:nth-child(2) { margin-top: 30%; transform: scale(0.8); }
+.cloud-layer .cloud:nth-child(3) { margin-top: 50%; transform: scale(1.1); }
+.cloud-layer .cloud:nth-child(4) { margin-top: 70%; transform: scale(0.9); }
+.cloud-layer .cloud:nth-child(5) { margin-top: 20%; transform: scale(1.3); }
+
+/* =========================================
+   DARK MODE CLOUDS
+========================================= */
+
+body.dark .cloud-layer .cloud {
+  background: #cbd5f5;
+
+  box-shadow:
+    30px 10px 0 #cbd5f5,
+    60px 0 #94a3b8,
+    90px 15px 0 #64748b;
+
+  opacity: 0.5;
+}
+
+
+/* =========================================
+   SUN / MOON
+========================================= */
+
+.sun {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+
+  background: radial-gradient(circle, #ffe066, #ffb703, #fb8500);
+
+  box-shadow:
+    0 0 40px rgba(255,183,3,0.6),
+    0 0 80px rgba(160, 109, 7, 0.4);
+
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+.sun::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,200,0,0.2);
+  animation: sunRotate 10s linear infinite;
+}
+
+/* Dark = Moon */
+body.dark .sun {
+  background: radial-gradient(circle, #e2e8f0, #94a3b8);
+
+  box-shadow:
+    0 0 25px rgba(148,163,184,0.6),
+    0 0 60px rgba(148,163,184,0.3),
+    0 0 120px rgba(148,163,184,0.1);
+}
+
+/* =========================================
+   RAIN
+=========================================
+
+.rain {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 150px;
+
+  background: linear-gradient(
+    to top,
+    rgba(195, 6, 85, 0.686),
+    
+  );
+
+  pointer-events: none;
+}
+
+body.dark .rain {
+  opacity: 0.1;
+} */
+
+/* =========================================
+   STAR
+========================================= */
+
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+  z-index: 1;
+
+  opacity: 0;
+}
+
+/* Show only in dark mode */
+body.dark .stars {
+  opacity: 1;
+}
+
+.stars::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+
+  background: white;
+  border-radius: 50%;
+
+  box-shadow:
+    50px 100px white,
+    200px 80px white,
+    400px 150px white,
+    600px 50px white,
+    800px 120px white,
+    1000px 200px white,
+    1200px 90px white,
+    1400px 180px white,
+    300px 300px white,
+    700px 250px white,
+    900px 320px white,
+    1100px 400px white,
+    1300px 350px white;
+
+  animation: twinkle 3s infinite alternate;
+}
+
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+
+  background: white;
+  border-radius: 50%;
+
+  box-shadow:
+    100px 200px white,
+    300px 150px white,
+    500px 250px white,
+    700px 100px white,
+    900px 200px white,
+    1100px 300px white,
+    1300px 150px white;
+
+  opacity: 0.6;
+  animation: twinkle 5s infinite alternate;
+}
+
+.stars::before,
+.stars::after {
+  filter: drop-shadow(0 0 4px white);
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes rainFall {
+  from { background-position: 0 0; }
+  to { background-position: 0 20px; }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sunPulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes sunRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes floatText {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes moveLayer {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes floatCloud {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 34px;
+  }
+
+  .welcome-container {
+    padding: 25px;
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}

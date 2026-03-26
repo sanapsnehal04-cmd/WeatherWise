@@ -1,0 +1,134 @@
+/* ===============================
+   🌍 Container
+================================ */
+.pref-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  padding: 20px;
+}
+
+/* ===============================
+   🌟 Title
+================================ */
+.pref-container h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+  text-align: center;
+
+  background: linear-gradient(90deg, #00feba, #5b9cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===============================
+   🧊 Glass Form Card
+================================ */
+.pref-form {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===============================
+   ✨ Inputs & Selects
+================================ */
+.pref-form input,
+.pref-form select {
+  width: 100%;
+  padding: 12px 14px;
+
+  border-radius: 12px;
+  border: none;
+  outline: none;
+
+  font-size: 14px;
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  transition: all 0.3s ease;
+}
+
+/* Placeholder */
+.pref-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Focus Effect */
+.pref-form input:focus,
+.pref-form select:focus {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 2px rgba(0, 254, 186, 0.5);
+}
+
+/* Dropdown options (for better visibility) */
+.pref-form select option {
+  color: #000;
+}
+
+/* ===============================
+   🚀 Button
+================================ */
+.pref-form button {
+  margin-top: 10px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #00feba, #5b9cff);
+  color: #000;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.pref-form button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 254, 186, 0.4);
+}
+
+/* Active click */
+.pref-form button:active {
+  transform: scale(0.97);
+}
+
+/* ===============================
+   📱 Responsive
+================================ */
+@media (max-width: 500px) {
+  .pref-form {
+    padding: 20px;
+  }
+
+  .pref-container h2 {
+    font-size: 22px;
+  }
+}

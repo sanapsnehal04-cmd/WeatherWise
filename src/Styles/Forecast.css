@@ -1,0 +1,303 @@
+.forecast-page {
+  padding: 20px;
+  color: white;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+}
+
+/* HEADER */
+.forecast-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+/* center title perfectly */
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.alert {
+  margin-left: auto;
+  background: #ef4444;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.back-btn {
+  padding: 8px 10px;
+  border:#1e3c72;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  border-radius: 6px;
+  width: 100px;
+  z-index: 2;
+}
+
+/* CARDS */
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.forecast-card {
+  background: rgba(255,255,255,0.15);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.forecast-card:first-child {
+  border: 2px solid #00ffd5;
+  box-shadow: 0 0 15px rgba(0,255,200,0.4);
+}
+
+.hourly {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+/* INSIGHT STRIP */
+.insight-strip {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.box {
+  background: rgba(255,255,255,0.15);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* GRAPHS */
+.graph-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.graph {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.graph:hover {
+  transform: translateY(-3px);
+}
+
+.graph h4 {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* CARD UPGRADE */
+.forecast-card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 230px;
+  transition: 0.3s;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+}
+
+.forecast-card.active {
+  border: 2px solid rgba(255,255,255,0.8);
+}
+
+/* DAY */
+.forecast-card .day {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ICON */
+.forecast-card img {
+  width: 60px;
+  margin: 8px 0;
+}
+
+/* TEMP */
+.forecast-card h2 {
+  font-size: 24px;
+  color: #00ffd5;
+}
+
+/* MIN MAX */
+.minmax {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* RAIN */
+.rain {
+  font-size: 13px;
+}
+
+/* RATING */
+.rating {
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+/* HOURLY */
+.hourly-strip {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  min-width: max-content;
+  scroll-snap-type: x mandatory;
+}
+
+.hour-box {
+  min-width: 70px;
+  background: rgba(255,255,255,0.2);
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+  scroll-snap-align: start;
+  transition: 0.3s;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* HOVER EFFECT */
+.hour-box:hover {
+  background: rgba(255,255,255,0.35);
+  transform: scale(1.05);
+}
+
+.hourly-wrapper {
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.hourly-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30px;
+  background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+}
+
+/* HIDE SCROLLBAR (OPTIONAL CLEAN LOOK) */
+.hourly-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hourly-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+}
+
+
+/*ADVICE LIST */
+.advice-list {
+  margin-top: 8px;
+  padding-left: 15px;
+}
+
+.advice-list li {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ================= BOTTOM SECTION ================= */
+
+.bottom-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+/* LEFT */
+.summary-card {
+  background: rgba(255,255,255,0.12);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summary-card h3 {
+  margin-bottom: 5px;
+}
+
+.summary-card p {
+  line-height: 1.6;
+}
+
+.insight {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+/* RIGHT GRID */
+.extras-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.extra-box {
+  background: rgba(255,255,255,0.12);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+
+  transition: 0.3s;
+}
+
+.extra-box:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.2);
+}
+
+.extra-box h4 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.extra-box p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .insight-strip,
+  .graph-grid {
+    grid-template-columns: 1fr;
+  }
+}

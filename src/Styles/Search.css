@@ -1,0 +1,225 @@
+/* =========================================
+   SEARCH PAGE
+========================================= */
+
+.search-page {
+  background: linear-gradient(135deg, #5f7fa8, #91a6c4);
+  min-height: 100vh;
+  padding-top: 80px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  position: relative;
+}
+
+/* =========================================
+   MODE BUTTON
+========================================= */
+
+.mode-btn {
+  position: fixed;
+  top: 95px;
+  right: 30px;
+
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+
+  background: white;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+.mode-btn:hover {
+  background: #ffd700;
+  transform: scale(1.1);
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.search-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+/* Title */
+.search-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Subtitle */
+.search-subtitle {
+  font-size: 16px;
+  margin: 0;
+  color: rgba(255,255,255,0.9);
+  max-width: 500px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   SEARCH CONTAINER
+========================================= */
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================================
+   SEARCH BOX
+========================================= */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+  width: 340px;
+
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.25),
+    0 0 20px rgba(255,255,255,0.1);
+
+  transition: 0.3s;
+}
+
+.search-box:hover {
+  transform: scale(1.02);
+}
+
+/* Input */
+.search-box input {
+  width: 100%;
+  padding: 12px 18px;
+
+  border: none;
+  outline: none;
+  border-radius: 30px;
+
+  font-size: 16px;
+  background: transparent;
+  color: white;
+  font-size: large;
+}
+
+.search-box input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Icon */
+.search-box img {
+  width: 40px;
+  padding: 10px;
+
+  border-radius: 50%;
+  background: white;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-box img:hover {
+  transform: scale(1.1);
+}
+
+/* =========================================
+   SUGGESTIONS
+========================================= */
+
+.suggestions-box {
+  margin-top: 10px;
+  width: 340px;
+
+  border-radius: 15px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.suggestion-item {
+  padding: 12px;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.suggestion-item:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+body.dark .search-page {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+body.dark .title {
+  color: #e2e8f0;
+}
+
+body.dark .subtitle {
+  color: rgba(226,232,240,0.8);
+}
+
+body.dark .search-box {
+  background: rgba(255,255,255,0.08);
+}
+
+body.dark .suggestions-box {
+  background: rgba(255,255,255,0.08);
+}
+
+body.dark .mode-btn {
+  background: #1e293b;
+  color: white;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .search-box {
+    width: 260px;
+  }
+
+  .suggestions-box {
+    width: 260px;
+  }
+
+}

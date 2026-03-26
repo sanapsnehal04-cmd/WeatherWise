@@ -1,0 +1,357 @@
+/* =========================================
+   WEATHER DASHBOARD
+========================================= */
+
+.weather-dashboard {
+  width: 100%;
+  /* min-height: 95vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================================
+LAYOUT
+========================================= */
+
+.weather-layout {
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 90vh;
+  background: #2f5473;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  padding: 20px;
+}
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.weather {
+  width: 90%;
+  max-width: 900px;
+  padding: 40px;
+  border-radius: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+
+  position: relative;
+  overflow: hidden;
+
+  animation: fadeUp 0.8s ease, floatCard 6s ease-in-out infinite;
+}
+
+.weather::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+  top: -50px;
+  right: -50px;
+}
+
+.weather::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 25px;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent 40%);
+}
+
+/* =========================================
+   ICON + TEMP
+========================================= */
+
+.weather-icon {
+  width: 110px;
+  margin-bottom: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.temprature {
+  font-size: 80px;
+  font-weight: 600;
+  color: white;
+}
+
+.location {
+  font-size: 22px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+/* =========================================
+   WEATHER DATA
+========================================= */
+
+.weather-data {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.weather-data .col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 18px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.weather-data .col:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.15);
+}
+
+.weather-data img {
+  width: 28px;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.weather-buttons {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+}
+
+.weather-buttons button {
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.weather-buttons button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* =========================================
+   SIDE PANELS
+========================================= */
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left-panel { transform: translateX(-20px); }
+.right-panel { transform: translateX(20px); }
+
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================================
+   LOADER
+========================================= */
+
+.loader {
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top: 4px solid white;
+
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+
+  animation: spin 1s linear infinite;
+}
+
+/* =========================================
+   INSIGHTS PANEL
+========================================= */
+
+.insights-panel {
+  gap: 20px;
+}
+
+/* CARD */
+.insight-card {
+  width: 250px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.118);
+  backdrop-filter: blur(15px);
+  color: whitesmoke;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.12);
+}
+
+/* TITLE */
+.insight-card h4 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+/* ROW */
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* BLOCK */
+.block {
+  margin-bottom: 10px;
+}
+
+.block span {
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+.block p {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* FEEL TEXT */
+.feel-text {
+  font-size: 22px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/*----------------------*/
+
+.weather-buttons {
+  position: relative;
+  z-index: 10;
+}
+
+/* VERY IMPORTANT */
+.sky,
+.clouds,
+.rain,
+.snow,
+.stars {
+  pointer-events: none;
+}
+
+.sun-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.sun-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #facc15, #f97316);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.personal-text {
+  font-size: 16px;
+  margin-top: 8px;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.alert-banner {
+  background: linear-gradient(90deg, #ff4d4d, #ff944d);
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatCard {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes floatSun {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .weather { padding: 25px; }
+  .temprature { font-size: 55px; }
+
+  .weather-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-layout {
+    flex-direction: column;
+  }
+
+  .side-panel {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .left-panel,
+  .right-panel {
+    transform: none;
+  }
+}
