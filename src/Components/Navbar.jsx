@@ -14,12 +14,19 @@ const Navbar = () => {
   const userEmail = localStorage.getItem("user_email");
   const role = localStorage.getItem("user_role");
 
-  const handleLogout = () => {
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("user_email");
+const handleLogout = () => {
+  // ✅ Clear all local storage (user_id, role, email, etc.)
+  localStorage.clear();
 
-    navigate("/login");
-  };
+  // ✅ Destroy backend session
+  fetch("http://localhost/weather-backend/api/logout.php", {
+    method: "POST", // safer practice
+    credentials: "include"
+  }).catch(err => console.error("Logout error:", err));
+
+  // ✅ Redirect to login
+  navigate("/login");
+};
   
   // ✅ Helper for active link
   const isActive = (path) => location.pathname === path;

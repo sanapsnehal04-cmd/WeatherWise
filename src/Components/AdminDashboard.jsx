@@ -11,13 +11,17 @@ const AdminDashboard = () => {
   useEffect(() => {
 
     // Fetch stats
-    fetch("http://localhost/weather-backend/api/adminStats.php")
+    fetch("http://localhost/weather-backend/api/adminStats.php", {
+      credentials: "include"
+    })
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(err => console.error("Stats error:", err));
 
     // Fetch alerts
-    fetch("http://localhost/weather-backend/api/getAlerts.php")
+    fetch("http://localhost/weather-backend/api/getAlerts.php", {
+      credentials: "include"
+    })
       .then(res => res.json())
       .then(data => setAlerts(data))
       .catch(err => console.error("Alerts error:", err));
@@ -29,6 +33,7 @@ const AdminDashboard = () => {
 
     try {
       await fetch("http://localhost/weather-backend/api/addAlert.php", {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, city })
@@ -49,6 +54,7 @@ const AdminDashboard = () => {
       await fetch("http://localhost/weather-backend/api/deleteAlert.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ id })
       });
 

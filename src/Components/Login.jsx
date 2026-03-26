@@ -85,15 +85,12 @@ const Login = () => {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost/weather-backend/api/login.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+        "http://localhost/weather-backend/api/login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔥 VERY IMPORTANT
+        body: JSON.stringify({ email, password })
+      });
 
       if (!res.ok) throw new Error("HTTP error");
 
@@ -107,7 +104,7 @@ const Login = () => {
       if (data.status === "success") {
         localStorage.setItem("user_id", data.user.id);
         localStorage.setItem("user_email", data.user.email);
-        localStorage.setItem("user_role", data.user.role);
+        localStorage.setItem("user_role", data.role);
 
         // 🔥 Admin redirect
         if (data.user.role === "admin") {

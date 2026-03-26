@@ -42,7 +42,7 @@ const App = () => {
   // ==============================
   // Routes where Navbar is hidden
   // ==============================
-  const hideNavbarRoutes = ["/", "/login", "/register","/forgot_password"];
+  const hideNavbarRoutes = ["/", "/login", "/register","/forgot-password"];
   
   return (
     <>
@@ -55,6 +55,7 @@ const App = () => {
         <Route path="/" element={<Welcome onEnter={handleEnter} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Protected Routes */}
 
