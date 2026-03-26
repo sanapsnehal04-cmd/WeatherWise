@@ -42,6 +42,13 @@ const handleLogout = () => {
       {/* Navigation Links */}
       <div className="nav-links">
 
+      <span
+        className={isActive("/preferences") ? "active" : ""}
+        onClick={() => navigate("/preferences")}
+      >
+        ⚙️ Preferences
+      </span>
+
         <span
           className={isActive("/weather") ? "active" : ""}
           onClick={() => navigate("/weather")}

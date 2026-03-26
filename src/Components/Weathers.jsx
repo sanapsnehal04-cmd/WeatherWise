@@ -154,21 +154,33 @@ const Weather = () => {
   // Helpers
   // ==============================
   const getSunProgress = () => {
-    if (!weatherData) return 0;
+  if (!weatherData) return 0;
 
-    const now = Math.floor(Date.now() / 1000);
-    const { sunrise, sunset } = weatherData;
+  // Current UTC time (in seconds)
+  const nowUTC = Math.floor(Date.now() / 1000);
 
-    if (now < sunrise) return 0;
-    if (now > sunset) return 100;
+  // Convert to city's local time
+  const localNow = nowUTC + weatherData.timezone;
 
-    return ((now - sunrise) / (sunset - sunrise)) * 100;
-  };
+  const sunrise = weatherData.sunrise;
+  const sunset = weatherData.sunset;
+
+  if (localNow < sunrise) return 0;
+  if (localNow > sunset) return 100;
+
+  const progress = ((localNow - sunrise) / (sunset - sunrise)) * 100;
+
+  return Math.min(Math.max(progress, 0), 100);
+};
 
   const formatTime = (unix, timezone) => {
     if (!unix) return "--:--";
     const date = new Date((unix + timezone) * 1000);
     return date.toUTCString().slice(17, 22);
+  };
+
+  const toFahrenheit = (celsius) => {
+    return (celsius * 9/5) + 32;
   };
 
   const getDuration = (start, end) => {
@@ -307,6 +319,22 @@ const Weather = () => {
   // ==============================
   // UI
   // ==============================
+
+console.log("Weather Data:", weatherData);
+
+if (weatherData) {
+  console.log("SYS:", weatherData.sys);
+
+  if (weatherData) {
+  console.log("NOW:", new Date());
+  console.log("Sunrise:", new Date(weatherData.sunrise * 1000));
+  console.log("Sunset:", new Date(weatherData.sunset * 1000));
+  console.log("Progress:", getSunProgress());
+}
+}
+
+
+
   if (loading) {
     return (
       <div className="weather-dashboard">
@@ -355,7 +383,12 @@ const Weather = () => {
         <div className="weather">
           <img src={weatherData.icon} className="weather-icon" alt="" />
 
-          <p className="temprature">{weatherData.temperature}°C</p>
+          <h1 className="temp">
+            {weatherData.temperature}°C 
+            <span className="temp-f">
+              / {toFahrenheit(weatherData.temperature).toFixed(1)}°F
+            </span>
+          </h1>
           <p className="location">{weatherData.location}</p>
 
           <div className="weather-advice">

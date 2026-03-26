@@ -88,7 +88,7 @@ const Login = () => {
         "http://localhost/weather-backend/api/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // 🔥 VERY IMPORTANT
+        credentials: "include", 
         body: JSON.stringify({ email, password })
       });
 
@@ -102,12 +102,12 @@ const Login = () => {
       }
 
       if (data.status === "success") {
-        localStorage.setItem("user_id", data.user.id);
-        localStorage.setItem("user_email", data.user.email);
+        localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("user_email", email);
         localStorage.setItem("user_role", data.role);
 
         // 🔥 Admin redirect
-        if (data.user.role === "admin") {
+        if (data.role === "admin") {
           navigate("/admin");
           return;
         }
@@ -115,7 +115,7 @@ const Login = () => {
         // 🔍 Check preferences
         try {
           const prefRes = await fetch(
-            `http://localhost/weather-backend/api/getPreferences.php?user_id=${data.user.id}`
+            `http://localhost/weather-backend/api/getPreferences.php?user_id=${data.user_id}`
           );
 
           const prefData = await prefRes.json();

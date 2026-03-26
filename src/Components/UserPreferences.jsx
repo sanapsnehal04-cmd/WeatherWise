@@ -24,19 +24,21 @@ const UserPreferences = () => {
     if (!user_id) return alert("Login required");
 
     try {
-      const res = await fetch("http://localhost/weather-backend/api/savePreferences.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          user_id,
-          ...form
-        })
-      });
+      const res = await fetch(
+        "http://localhost/weather-backend/api/savePreferences.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user_id,
+            ...form
+          })
+        }
+      );
 
-      const data = await res.json();
-
+      const data = await res.json(); 
       if (data.status === "success") {
         alert("Preferences saved ✅");
         navigate("/weather");
@@ -44,7 +46,8 @@ const UserPreferences = () => {
         alert("Error saving preferences");
       }
 
-    } catch {
+    } catch (err) {
+      console.log(err);
       alert("Server error");
     }
   };
