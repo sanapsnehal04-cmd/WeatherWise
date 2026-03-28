@@ -58,21 +58,34 @@ const Weather = () => {
       const weatherMain = data.weather[0].main;
       const icon = iconMap[data.weather[0].icon] || clear_icon;
 
-      // Background handling
-      const bgClasses = ["sunny-bg", "cloud-bg", "rain-bg", "snow-bg"];
-      document.body.classList.remove(...bgClasses);
+      // ==============================
+      // Dynamic Background Logic
+      // ==============================
 
-      const bgMap = {
-        Clear: "sunny-bg",
-        Clouds: "cloud-bg",
-        Rain: "rain-bg",
-        Drizzle: "rain-bg",
-        Snow: "snow-bg"
+      const getBackgroundClass = (temp, condition) => {
+        if (condition === "Rain" || condition === "Drizzle") return "bg-rain";
+        if (condition === "Snow") return "bg-snow";
+        if (condition === "Clouds") return "bg-cloud";
+
+        // Temperature based
+        if (temp >= 35) return "bg-hot";
+        if (temp >= 25) return "bg-warm";
+        if (temp >= 15) return "bg-cool";
+        return "bg-cold";
       };
 
-      if (bgMap[weatherMain]) {
-        document.body.classList.add(bgMap[weatherMain]);
-      }
+     
+      const bgClass = getBackgroundClass(data.main.temp, weatherMain);
+
+      // Remove only bg-* classes
+      document.body.classList.forEach(cls => {
+        if (cls.startsWith("bg-")) {
+          document.body.classList.remove(cls);
+        }
+      });
+
+      // Add new one
+      document.body.classList.add(bgClass);
 
       const windKm = Math.floor(data.wind.speed * 3.6);
 
@@ -154,23 +167,51 @@ const Weather = () => {
   // Helpers
   // ==============================
   const getSunProgress = () => {
-  if (!weatherData) return 0;
+    if (!weatherData) return 0;
 
-  // Current UTC time (in seconds)
-  const nowUTC = Math.floor(Date.now() / 1000);
+    // Current UTC time (seconds)
+    const nowUTC = Math.floor(Date.now() / 1000);
 
-  // Convert to city's local time
-  const localNow = nowUTC + weatherData.timezone;
+    // Convert to city's local time
+    const localNow = nowUTC + weatherData.timezone;
 
-  const sunrise = weatherData.sunrise;
-  const sunset = weatherData.sunset;
+    const sunrise = weatherData.sunrise;
+    const sunset = weatherData.sunset;
 
-  if (localNow < sunrise) return 0;
-  if (localNow > sunset) return 100;
+    if (!sunrise || !sunset) return 0;
 
-  const progress = ((localNow - sunrise) / (sunset - sunrise)) * 100;
+    if (localNow < sunrise) return 0;
+    if (localNow > sunset) return 100;
 
-  return Math.min(Math.max(progress, 0), 100);
+    const progress = ((localNow - sunrise) / (sunset - sunrise)) * 100;
+
+    return Math.min(Math.max(progress, 0), 100);
+  };
+
+  const getDayPhaseProgress = () => {
+    if (!weatherData) return { progress: 0, isNight: false };
+
+    const nowUTC = Math.floor(Date.now() / 1000);
+    const localNow = nowUTC + weatherData.timezone;
+
+    const sunrise = weatherData.sunrise;
+    const sunset = weatherData.sunset;
+
+    if (!sunrise || !sunset) return { progress: 0, isNight: false };
+
+    // Day time
+    if (localNow >= sunrise && localNow <= sunset) {
+      const progress = (localNow - sunrise) / (sunset - sunrise);
+      return { progress, isNight: false };
+    }
+
+    // Night time
+    const nightStart = sunset;
+    const nextSunrise = sunrise + 86400;
+
+    const progress = (localNow - nightStart) / (nextSunrise - nightStart);
+
+    return { progress: Math.min(Math.max(progress, 0), 1), isNight: true };
 };
 
   const formatTime = (unix, timezone) => {
@@ -252,19 +293,19 @@ const Weather = () => {
   };
 
   const getComfortScore = (temp, humidity, wind) => {
-  if (!userPref) return null;
+    if (!userPref) return null;
 
-  let score = 10;
+    let score = 10;
 
-  if (temp > userPref.preferred_temp_max || temp < userPref.preferred_temp_min) {
-    score -= 4;
-  }
+    if (temp > userPref.preferred_temp_max || temp < userPref.preferred_temp_min) {
+      score -= 4;
+    }
 
-  if (humidity > 80) score -= 2;
-  if (wind > 20) score -= 1;
+    if (humidity > 80) score -= 2;
+    if (wind > 20) score -= 1;
 
-  return Math.max(score, 1);
-};
+    return Math.max(score, 1);
+  };
 
   // ==============================
   // Location Weather
@@ -316,24 +357,24 @@ const Weather = () => {
     }
   };
 
+  const { progress, isNight } = getDayPhaseProgress();
+
   // ==============================
   // UI
   // ==============================
 
-console.log("Weather Data:", weatherData);
-
-if (weatherData) {
-  console.log("SYS:", weatherData.sys);
+  console.log("Weather Data:", weatherData);
 
   if (weatherData) {
-  console.log("NOW:", new Date());
-  console.log("Sunrise:", new Date(weatherData.sunrise * 1000));
-  console.log("Sunset:", new Date(weatherData.sunset * 1000));
-  console.log("Progress:", getSunProgress());
-}
-}
+    console.log("SYS:", weatherData.sys);
 
-
+    if (weatherData) {
+      console.log("NOW (Local City):", new Date((Date.now() + weatherData.timezone * 1000)));
+      console.log("Sunrise:", new Date(weatherData.sunrise * 1000));
+      console.log("Sunset:", new Date(weatherData.sunset * 1000));
+      console.log("Progress:", getSunProgress());
+    }
+  }
 
   if (loading) {
     return (
@@ -358,24 +399,68 @@ if (weatherData) {
           ))}
         </div>
       )}
+      
+      {/* 🌦 WEATHER ANIMATION LAYER */}
+      <div className="weather-animations">
+        {weatherData.weatherMain === "Rain" && <div className="rain"></div>}
+        {(weatherData.weatherMain === "Clouds" || weatherData.weatherMain === "Mist") && <div className="clouds"></div>}
+        {weatherData.weatherMain === "Snow" && <div className="snow"></div>}
+        {weatherData.weatherMain === "Clear" && weatherData.temperature < 25 && <div className="stars"></div>}
+        {(weatherData.temperature >= 30 && weatherData.weatherMain === "Clear") && <div className="sun-glow"></div>}
+      </div>
 
       <div className="weather-layout">
 
         {/* LEFT PANEL */}
         <div className="left-panel">
           <div className="insight-card">
-            <h4>🧠 Today Insights</h4>
+            <h5>💭 Today's Insights</h5>
             <p>🎯 Score: {getTodayScore(weatherData.temperature, weatherData.humidity, weatherData.windKm)}/10</p>
-            <p>⏱ {getBestTimeToday(weatherData.temperature)}</p>
+            <p>{getBestTimeToday(weatherData.temperature)}</p>
             <p>{getWeatherPersonality(weatherData.temperature, weatherData.weatherMain)}</p>
           </div>
 
           <div className="insight-card">
-            <h4>🌅 Day Progress</h4>
-            <div className="sun-bar">
-              <div className="sun-progress" style={{ width: `${getSunProgress()}%` }}></div>
+            <h5>✨ Day Progress</h5>
+            <div className="sun-arc-container">
+              <div className="sun-arc">
+                <div
+                  className={`sky ${isNight ? "night" : "day"}`}
+                  style={{ "--progress": progress }}
+                ></div>
+
+                {isNight && (<>
+                    <div className="stars stars-1"></div>
+                    <div className="stars stars-2"></div>
+                    <div className="stars stars-3"></div>
+                  </>
+                )}
+
+                <div
+                  className="sun-moon"
+                  style={{
+                    left: `calc(${progress * 100}% - 11px)`,
+                    bottom: `calc(${Math.sin(progress * Math.PI)} * var(--arc-height))`
+                  }}
+                ></div>
+
+              </div>
             </div>
           </div>
+
+          <div className="insight-card">
+            <h5>⭐ Comfort Score: </h5>
+            <div className="comfort-score">
+              {userPref && (
+                <div > <p>{getComfortScore(
+                        weatherData.temperature,
+                        weatherData.humidity,
+                        weatherData.windSpeed * 3.6
+                      )} / 10 </p>
+                </div>
+              )}             
+            </div>
+          </div>  
         </div>
 
 
@@ -391,15 +476,6 @@ if (weatherData) {
           </h1>
           <p className="location">{weatherData.location}</p>
 
-          <div className="weather-advice">
-            {getWeatherAdvice(weatherData.temperature, weatherData.weatherMain)}
-
-            {userPref && (
-              <p className="personal-advice">
-                {getPersonalizedAdvice(weatherData.temperature)}
-              </p>
-            )}
-          </div>
 
           <div className="weather-data">
             <div className="col">
@@ -419,15 +495,7 @@ if (weatherData) {
             </div>
           </div>
 
-          {userPref && (
-            <div className="comfort-score">
-              ⭐ Comfort Score: {getComfortScore(
-                weatherData.temperature,
-                weatherData.humidity,
-                weatherData.windSpeed * 3.6
-              )} / 10
-            </div>
-          )}
+          
 
           <div className="weather-buttons">
             <button onClick={() => navigate("/search")}>🔍 Search More</button>
@@ -441,7 +509,7 @@ if (weatherData) {
         <div className="right-panel">
 
           <div className="insight-card">
-            <h4>🌍 Day Cycle</h4>
+            <h5>🌍 Day Cycle</h5>
             <div className="row"><span>🌅</span><span>{formatTime(weatherData.sunrise, weatherData.timezone)}</span></div>
             <div className="row"><span>🌇</span><span>{formatTime(weatherData.sunset, weatherData.timezone)}</span></div>
             <div className="row"><span>☀️</span><span>{getDuration(weatherData.sunrise, weatherData.sunset)}</span></div>
@@ -449,13 +517,13 @@ if (weatherData) {
           </div>
 
           <div className="insight-card">
-            <h4>🌇 Light</h4>
-            <p>{getGoldenHour(weatherData.sunrise, weatherData.sunset, weatherData.timezone).morning}</p>
-            <p>{getGoldenHour(weatherData.sunrise, weatherData.sunset, weatherData.timezone).evening}</p>
+            <h5>💫 Golden Hours </h5>
+            <p>🌅 {getGoldenHour(weatherData.sunrise, weatherData.sunset, weatherData.timezone).morning}</p>
+            <p>🌇 {getGoldenHour(weatherData.sunrise, weatherData.sunset, weatherData.timezone).evening}</p>
           </div>
 
           <div className="insight-card">
-            <h4>🌡 Feel</h4>
+            <h5>🌡 Feel Like</h5>
             <p>{getFeelsLikeText(weatherData.temperature, weatherData.humidity)}</p>
             {userPref && <p>{getPersonalizedAdvice(weatherData.temperature)}</p>}
           </div>

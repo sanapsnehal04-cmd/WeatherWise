@@ -1,96 +1,121 @@
-/* =========================================
-   WEATHER DASHBOARD
-========================================= */
+/* ===============================
+   BASE
+=============================== */
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  transition: background 0.6s ease;
+}
+
+/* ===============================
+   BACKGROUNDS (DYNAMIC)
+=============================== */
+
+.bg-hot {
+  background: radial-gradient(circle at top, #ff512f, #dd2476);
+}
+
+.bg-warm {
+  background: radial-gradient(circle at top, #f7971e, #ffd200);
+}
+
+.bg-cool {
+  background: radial-gradient(circle at top, #56ccf2, #2f80ed);
+}
+
+.bg-cold {
+  background: radial-gradient(circle at top, #83a4d4, #b6fbff);
+}
+
+.bg-rain {
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+}
+
+.bg-cloud {
+  background: linear-gradient(135deg, #757f9a, #d7dde8);
+}
+
+.bg-snow {
+  background: linear-gradient(135deg, #e6dada, #274046);
+}
+
+/* ===============================
+   DASHBOARD
+=============================== */
 
 .weather-dashboard {
-  width: 100%;
-  /* min-height: 95vh; */
+  min-height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-}
-
-/* =========================================
-LAYOUT
-========================================= */
-
-.weather-layout {
-
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  min-height: 90vh;
-  background: #2f5473;
-  grid-template-columns: 1fr 1.5fr 1fr;
-  padding: 20px;
-}
-
-/* =========================================
-   MAIN CARD
-========================================= */
-
-.weather {
-  width: 90%;
-  max-width: 900px;
-  padding: 40px;
-  border-radius: 25px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(25px);
-
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-
   position: relative;
-  overflow: hidden;
-
-  animation: fadeUp 0.8s ease, floatCard 6s ease-in-out infinite;
+  z-index: 2;
 }
 
-.weather::before {
-  content: "";
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
-  top: -50px;
-  right: -50px;
-}
-
-.weather::after {
+.weather-dashboard::before {
   content: "";
   position: absolute;
   inset: 0;
+  background: rgba(0, 0, 0, 0.25); /* adjust 0.2–0.35 */
+  z-index: 0;
+}
+
+/* ===============================
+   LAYOUT
+=============================== */
+
+.weather-layout {
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 30px;
+
+  padding: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===============================
+   PANELS
+=============================== */
+
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30%;
+}
+
+/* ===============================
+   MAIN WEATHER CARD
+=============================== */
+
+.weather {
+  /* padding: 40px; */
   border-radius: 25px;
-  background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent 40%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-/* =========================================
-   ICON + TEMP
-========================================= */
+/* ===============================
+   TEXT
+=============================== */
 
-.weather-icon {
-  width: 110px;
-  margin-bottom: 10px;
-  animation: float 3s ease-in-out infinite;
-}
-
-.temprature {
-  font-size: 80px;
-  font-weight: 600;
+.temp {
+  font-size: 70px;
+  font-weight: 700;
   color: white;
-}
-
-.location {
-  font-size: 22px;
-  opacity: 0.8;
-  margin-bottom: 10px;
 }
 
 .temp-f {
@@ -99,9 +124,15 @@ LAYOUT
   margin-left: 5px;
 }
 
-/* =========================================
+.location {
+  font-size: 20px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+/* ===============================
    WEATHER DATA
-========================================= */
+=============================== */
 
 .weather-data {
   width: 100%;
@@ -110,254 +141,464 @@ LAYOUT
   margin-top: 20px;
 }
 
-.weather-data .col {
+.col {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,0.08);
-  padding: 12px 18px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
+  gap: 10px;
 
-.weather-data .col:hover {
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  padding: 10px 14px;
+  border-radius: 12px;
 }
 
 .weather-data img {
-  width: 28px;
+  width: 26px;
 }
 
-/* =========================================
+/* ===============================
    BUTTONS
-========================================= */
+=============================== */
 
 .weather-buttons {
-  margin-top: 30px;
+  margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   width: 100%;
 }
 
 .weather-buttons button {
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  font-size: 18px;
-  font-weight: 500;
-  background: rgba(255,255,255,0.12);
+  padding: 12px;
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
   color: white;
-  backdrop-filter: blur(10px);
+
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  will-change: transform;
 }
 
 .weather-buttons button:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transform: scale(1.03);
 }
 
-/* =========================================
-   SIDE PANELS
-========================================= */
+/* ===============================
+   INSIGHT CARDS
+=============================== */
 
-.side-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.left-panel { transform: translateX(-20px); }
-.right-panel { transform: translateX(20px); }
-
-.left-panel,
-.right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* =========================================
-   LOADER
-========================================= */
-
-.loader {
-  border: 4px solid rgba(255,255,255,0.2);
-  border-top: 4px solid white;
-
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-
-  animation: spin 1s linear infinite;
-}
-
-/* =========================================
-   INSIGHTS PANEL
-========================================= */
-
-.insights-panel {
-  gap: 20px;
-}
-
-/* CARD */
 .insight-card {
-  width: 250px;
   padding: 18px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.118);
-  backdrop-filter: blur(15px);
-  color: whitesmoke;
 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  transition: 0.3s;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #f1f5f9;
+
+  transition: all 0.3s ease;
 }
 
 .insight-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255,255,255,0.12);
+  transform: translateY(-6px);
 }
 
-/* TITLE */
-.insight-card h4 {
-  font-size: 24px;
-  margin-bottom: 12px;
-  opacity: 0.8;
+.insight-card h5 {
+  color: #040843;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: 'Franklin Gothic Medium';
 }
 
-/* ROW */
+.insight-card p {
+  color: snow;
+  text-align: center;
+  font-family: serif;
+}
+/* ===============================
+   ROWS
+=============================== */
+
 .row {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   margin-bottom: 6px;
+
 }
 
-/* BLOCK */
-.block {
-  margin-bottom: 10px;
-}
-
-.block span {
-  font-size: 22px;
+.row span:first-child {
   opacity: 0.7;
 }
 
-.block p {
-  font-size: 20px;
-  font-weight: 500;
+.row span:last-child {
+  font-family: serif;
 }
 
-/* FEEL TEXT */
-.feel-text {
-  font-size: 22px;
-  text-align: center;
-  margin-top: 5px;
-}
-
-/*----------------------*/
-
-.weather-buttons {
-  position: relative;
-  z-index: 10;
-}
-
-/* VERY IMPORTANT */
-.sky,
-.clouds,
-.rain,
-.snow,
-.stars {
-  pointer-events: none;
-}
-
-.sun-bar {
-  width: 100%;
-  height: 10px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
+/* ===============================
+   SUN PROGRESS
+=============================== */
+/* Progress fill */
 .sun-progress {
   height: 100%;
-  background: linear-gradient(90deg, #facc15, #f97316);
-  border-radius: 10px;
-  transition: width 0.6s ease-in-out;
+  background: linear-gradient(
+    90deg,
+    #facc15 0%,
+    #f97316 50%,
+    #ef4444 100%
+  );
+  border-radius: 50px;
+  transition: width 0.8s ease-in-out;
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.6);
 }
 
-.personal-text {
-  font-size: 16px;
-  margin-top: 8px;
-  opacity: 0.85;
-  text-align: center;
+/* Moving sun */
+.sun-icon {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  transition: left 0.8s ease-in-out;
+  filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.8));
 }
+
+/* BASE */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.9;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ⭐ Layer 1 (small stars - far) */
+.stars-1::before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: white;
+
+  box-shadow:
+    5vw 10vh white,
+    15vw 30vh white,
+    25vw 20vh white,
+    35vw 60vh white,
+    45vw 40vh white,
+    55vw 70vh white,
+    65vw 15vh white,
+    75vw 50vh white,
+    85vw 25vh white,
+    95vw 65vh white;
+
+  animation: twinkle 3s infinite alternate;
+  opacity: 0.6;
+}
+
+/* ⭐ Layer 2 (medium stars) */
+.stars-2::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+
+  box-shadow:
+    10vw 20vh white,
+    20vw 50vh white,
+    30vw 35vh white,
+    40vw 70vh white,
+    60vw 25vh white,
+    70vw 55vh white,
+    80vw 40vh white,
+    90vw 60vh white;
+
+  animation: twinkle 2s infinite alternate;
+  opacity: 0.8;
+}
+
+/* ⭐ Layer 3 (bright stars - near) */
+.stars-3::before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+
+  box-shadow:
+    12vw 30vh white,
+    28vw 60vh white,
+    52vw 20vh white,
+    68vw 50vh white,
+    88vw 35vh white;
+
+  animation: twinkle 1.5s infinite alternate;
+  opacity: 1;
+}
+
+/* ===============================
+   ALERT BANNER
+=============================== */
 
 .alert-banner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
   background: linear-gradient(90deg, #ff4d4d, #ff944d);
   padding: 10px;
   text-align: center;
   color: white;
   font-weight: bold;
-  margin-bottom: 10px;
   border-radius: 10px;
+  z-index: 5;
 }
 
-/* =========================================
+/* ===============================
+   ANIMATION LAYER
+=============================== */
+
+.weather-animations {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 🌧 RAIN */
+.rain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background: repeating-linear-gradient(
+    transparent,
+    rgba(255,255,255,0.3) 2px,
+    transparent 4px
+  );
+  animation: rain 0.5s linear infinite;
+}
+
+/* ☁️ CLOUDS */
+.clouds {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+  animation: cloudMove 30s linear infinite;
+}
+
+/* ❄️ SNOW */
+.snow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background: radial-gradient(white 2px, transparent 2px);
+  background-size: 30px 30px;
+  animation: snow 8s linear infinite;
+}
+
+/* ☀️ SUN */
+.sun-glow {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,200,0,0.7), transparent);
+  border-radius: 50%;
+}
+
+.sun-arc-container {
+  margin-top: 20px;
+}
+
+.sun-arc {
+  position: relative;
+  height: 120px;
+  border-radius: 20px;
+  overflow: hidden;
+  --arc-height: 100px;
+} 
+
+.sun-arc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at center,
+    transparent 60%,
+    rgba(0,0,0,0.25)
+  );
+}
+
+.sun-arc::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+
+  background: rgba(255,255,255,0.2);
+}
+
+.arc-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+
+  border-top: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* SKY BACKGROUND */
+.sky {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: background 1.5s ease-in-out;
+}
+
+.sky::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 140, 0, 0.4),
+    transparent
+  );
+}
+
+.sky::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(
+    circle at 50% 80%,
+    rgba(255, 140, 0, 0.3),
+    transparent
+  );
+}
+
+/* DAY SKY */
+
+.sky.day {
+  background: linear-gradient(
+    to top,
+    #f59e0b,
+    #facc15,
+    #87ceeb
+  );
+} 
+
+/* NIGHT SKY */
+.sky.night {
+  background: linear-gradient(
+    to top,
+    #020617,
+    #0f172a,
+    #1e293b
+  );
+  box-shadow: 0 0 12px rgba(200, 200, 255, 0.5);
+}
+
+/* SUN / MOON */
+.sun-moon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, 50%);
+  background: radial-gradient(circle, #e2e8f0, #94a3b8);
+  box-shadow: 0 0 12px rgba(200, 200, 255, 0.5);
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-moon::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* NIGHT GLOW */
+.sky.day .sun-moon {
+  background: radial-gradient(circle, #ffd54f, #f97316);
+  box-shadow: 0 0 20px rgba(255, 200, 0, 0.9);
+}
+
+/* ===============================
    ANIMATIONS
-========================================= */
+=============================== */
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes rain {
+  from { background-position: 0 0; }
+  to { background-position: 0 20px; }
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+@keyframes cloudMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-@keyframes floatCard {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes snow {
+  from { background-position: 0 0; }
+  to { background-position: 0 100px; }
 }
 
-@keyframes floatSun {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes twinkle {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* =========================================
+/* ===============================
    RESPONSIVE
-========================================= */
+=============================== */
 
-@media (max-width: 768px) {
-  .weather { padding: 25px; }
-  .temprature { font-size: 55px; }
+@media (max-width: 900px) {
+  .weather-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-panel,
+  .right-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
   .weather-buttons {
     grid-template-columns: 1fr;
   }
 
-  .weather-layout {
-    flex-direction: column;
-  }
-
-  .side-panel {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .left-panel,
-  .right-panel {
-    transform: none;
+  .insight-card {
+    flex: 1 1 250px;
   }
 }

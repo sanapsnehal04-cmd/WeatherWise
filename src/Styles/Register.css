@@ -43,6 +43,7 @@
 /* 🌙 Dark Mode */
 .register-container.dark {
   background: linear-gradient(120deg, #580e42, #0b1e4a);
+  background-color: #e9edc9;
 }
 
 .register-container.dark .mode-toggle button {
@@ -93,19 +94,14 @@
 .mode-toggle button::before {
   content: "🌙";
   position: absolute;
-
   width: 24px;
   height: 24px;
-
   border-radius: 50%;
   background: white;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 14px;
-
   transform: translateX(0);
   transition: 0.4s ease;
 }
@@ -113,35 +109,39 @@
 /* =========================================
    CARD
 ========================================= */
-.register-card {
-  position: relative;
-  z-index: 2;
-  background: rgba(61, 9, 86, 0.951);
-  backdrop-filter: blur(20px);
-  padding: 45px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 420px;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+.register-card{
+    width: 550px;
+    max-width: 90%;
+    padding: 50px;
+    border-radius: 26px;
+    background: rgba(20, 30, 50, 0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: white;
+    animation: fadeIn 0.8s ease, float 6s ease-in-out infinite;
+    transition: all 0.4s ease;
+
 }
 
 /* =========================================
    TEXT
 ========================================= */
 .reg-title {
-  text-align: center;
   font-size: 30px;
-  font-weight: 600;
-  color: #d71a89fc;
+  font-weight: 900;
+  background: linear-gradient(45deg, #3b83c3, #38d2da);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
 .reg-subtitle {
-  text-align: center;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 25px;
-  color: rgba(62, 165, 206, 0.871);
+  margin-top: -2%;
+  font-size: 23px;
+  opacity: 0.75;
+  margin-bottom: 20px;
 }
 
 /* =========================================
@@ -150,6 +150,14 @@
 .input-group {
   position: relative;
   margin-bottom: 20px;
+}
+
+.input-group p {
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .input-group input {
@@ -209,12 +217,10 @@ button {
   padding: 14px;
   border-radius: 12px;
   border: none;
-
   background: linear-gradient(90deg, #176b7a8a, #3b82f6);
   color: white;
   font-weight: 800;
   font-size: 15px;
-
   margin-top: 10px;
   cursor: pointer;
   transition: 0.3s;

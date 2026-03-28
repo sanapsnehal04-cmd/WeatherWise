@@ -1,5 +1,6 @@
 /* =========================================
-   Background Video
+(LOGIN PAGE)    
+Background Video
 ========================================= */
 .bg-video {
   position: fixed;
@@ -9,7 +10,6 @@
   height: 100%;
   object-fit: cover;
   z-index: -2;
-
   transition: opacity 0.5s ease;
   filter: brightness(0.85);
 }
@@ -18,7 +18,6 @@ form{
   padding-top: 2%;
 }
 
-
 /* 🌫 Overlay */
 .overlay {
   position: fixed;
@@ -26,14 +25,12 @@ form{
   left: 0;
   width: 100%;
   height: 100%;
-
+  pointer-events: none; 
+  z-index: -1;
   background: linear-gradient(
     rgba(0, 0, 0, 0.55),
     rgba(0, 0, 0, 0.75)
   );
-
-  pointer-events: none; /* ✅ FIX CLICK ISSUE */
-  z-index: -1;
 }
 
 /* =========================================
@@ -43,16 +40,12 @@ form{
   position: fixed;
   top: 20px;
   right: 20px;
-
   font-size: 18px;
   cursor: pointer;
-
   background: rgba(255,255,255,0.2);
   padding: 10px 12px;
   border-radius: 50%;
-
   backdrop-filter: blur(10px);
-
   z-index: 10;
   transition: 0.3s;
 }
@@ -69,7 +62,6 @@ form{
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: relative;
   z-index: 1;
 }
@@ -80,22 +72,16 @@ form{
 .login-box {
   width: 550px;
   max-width: 90%;
-
   padding: 50px;
   border-radius: 26px;
-
   background: rgba(20, 30, 50, 0.55);
   backdrop-filter: blur(20px);
-
   border: 1px solid rgba(255,255,255,0.15);
-
+  text-align: center;
+  color: white;
   box-shadow:
     0 30px 100px rgba(0,0,0,0.7),
     inset 0 0 25px rgba(255,255,255,0.05);
-
-  text-align: center;
-  color: white;
-
   animation: fadeIn 0.8s ease, float 6s ease-in-out infinite;
   transition: all 0.4s ease;
 }
@@ -113,7 +99,6 @@ form{
   background: linear-gradient(45deg, #3b83c3, #38d2da);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   margin-bottom: 10px;
 }
 
@@ -136,23 +121,18 @@ form{
 .input-group input {
   width: 100%;
   padding: 14px 12px;
-
   border-radius: 12px;
   border: 1px solid transparent;
-
   background: rgba(255, 255, 255, 0.15);
   color: white;
-
   outline: none;
   font-size: 14px;
-
   transition: all 0.3s ease;
 }
 
 .input-group input:focus {
   border: 1px solid #00f2fe;
   background: rgba(255,255,255,0.25);
-
   box-shadow:
     0 0 12px rgba(0, 242, 254, 0.6),
     0 0 25px rgba(79, 172, 254, 0.3);
@@ -165,7 +145,6 @@ form{
   top: 14px;
   color: #ddd;
   font-size: 14px;
-
   pointer-events: none;
   transition: 0.3s;
 }
@@ -207,23 +186,18 @@ form{
 button {
   width: 100%;
   padding: 14px;
-
   border-radius: 14px;
   border: none;
-
   background: linear-gradient(135deg, #4facfe, #00f2fe);
   color: white;
-
   font-size: 16px;
   font-weight: 600;
-
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 button:hover {
   transform: translateY(-2px) scale(1.03);
-
   box-shadow:
     0 10px 30px rgba(0, 242, 254, 0.6),
     0 0 40px rgba(79, 172, 254, 0.4);
@@ -247,8 +221,8 @@ button:disabled {
 }
 
 .register-text a {
-  color: #00f2fe;
-  text-decoration: none;
+  color: #ffffff;
+  text-decoration: underline;
   position: relative;
 }
 
@@ -312,4 +286,19 @@ body.dark .overlay {
   .login-box {
     padding: 30px;
   }
+}
+
+.forgot-link
+{
+  margin-top: 3%;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+
+.forgot-link a{
+  color:#ffffff;
+  text-decoration: none;
+  /* margin-top: 15%; */
 }
