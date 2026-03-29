@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import {
-  LineChart, Line, XAxis, YAxis,
+  XAxis, YAxis,
   Tooltip, ResponsiveContainer,
   BarChart, Bar,
   PieChart, Pie,
@@ -95,8 +95,7 @@ const Forecast = () => {
         isToday: false
       }))
 
-      const processed = [todayData, ...processedDays]
-      setForecast(processed)
+      setForecast([todayData, ...processedDays])
       setHourlyData(hourly)
 
     }
@@ -106,7 +105,6 @@ const Forecast = () => {
 
   // ================= SAFE DATA =================
   const temps = forecast.map(f => f.temp)
-
   const avgTemp = temps.length ? Math.round(temps.reduce((a,b)=>a+b,0)/temps.length) : 0
   const maxTemp = temps.length ? Math.max(...temps) : 0
   const minTemp = temps.length ? Math.min(...temps) : 0
@@ -134,52 +132,67 @@ const Forecast = () => {
     { name: "Hot", value: forecast.filter(f=>f.temp>30).length }
   ]
 
-  const getSmartAdvice = () => {
-    let tips = []
+  const getTempClass = (temp) => {
+    if (temp < 15) return "cold"
+    if (temp <= 30) return "mild"
+    return "hot"
+  }
 
-    if (!forecast.length) return tips
+  const getAIInsight = () => {
+    if (!forecast.length) return "Analyzing weather..."
 
     const temps = forecast.map(f => f.temp)
     const pops = forecast.map(f => f.pop)
 
+    const avg = temps.reduce((a,b)=>a+b,0)/temps.length
     const max = Math.max(...temps)
     const min = Math.min(...temps)
-    const avg = temps.reduce((a,b)=>a+b,0)/temps.length
+    const rainDays = pops.filter(p => p > 60).length
 
-    // 🌡 Temperature based
-    if (max > 35) tips.push("🔥 High temperatures expected — stay hydrated")
-    if (min < 5) tips.push("🧥 Cold weather — wear warm clothes")
+    let insight = ""
 
-    // 🌧 Rain based
-    if (pops.some(p => p > 70)) tips.push("🌧 Heavy rain likely — carry umbrella")
-    else if (pops.some(p => p > 40)) tips.push("☁ Light rain possible")
-
-    // 🌤 Comfort
-    if (avg >= 18 && avg <= 28) tips.push("🌤 Weather looks pleasant for outings")
-
-    // 🌬 Wind-like logic (approx using temp variation)
-    if (max - min > 10) tips.push("🌡 Big temperature variation — dress in layers")
-
-    // fallback
-    if (tips.length === 0) {
-      tips.push("🌈 Overall stable weather conditions")
-      tips.push("🚶 Good time for outdoor activities")
+    // Temperature logic
+    if (avg >= 20 && avg <= 28) {
+      insight += "Weather is comfortable for most outdoor activities. "
+    } else if (max > 35) {
+      insight += "High heat levels detected — avoid outdoor exposure during peak hours. "
+    } else if (min < 10) {
+      insight += "Cold conditions expected — layering is recommended. "
     }
 
-    return tips.slice(0, 4) // limit to 4
+    // Rain logic
+    if (rainDays >= 3) {
+      insight += "Frequent rainfall may disrupt travel plans. "
+    } else if (rainDays > 0) {
+      insight += "Occasional rain expected — keep an umbrella handy. "
+    }
+
+    // Variation logic
+    if (max - min > 10) {
+      insight += "Significant temperature variation throughout the week. "
+    }
+
+    // Final recommendation
+    insight += `Best day for outdoor plans is ${getPlanDay()}.`
+
+    return insight
   }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div style={{
-          background: "#1e293b",
-          padding: "10px",
+          background: "rgba(15,23,42,0.9)",
+          padding: "10px 14px",
           borderRadius: "10px",
-          color: "white"
+          border: "1px solid rgba(255,255,255,0.1)",
+          color: "#fff",
+          backdropFilter: "blur(6px)"
         }}>
-          <p>{label}</p>
-          <p>🌡 Temp: {payload[0].value}°C</p>
+          <p style={{ fontSize: "13px", opacity: 0.7 }}>{label}</p>
+          <p style={{ fontSize: "16px", fontWeight: "bold" }}>
+            🌡 {payload[0].value}°C
+          </p>
         </div>
       )
     }
@@ -231,14 +244,7 @@ const Forecast = () => {
     })
   }
 
-  // ================= RAIN TREND =================
-  const getRainTrend = () => {
-    const rainy = forecast.filter(f => f.pop > 60).length
-
-    if (rainy >= 3) return "Rainy Week"
-    if (rainy > 0) return "Mixed Weather"
-    return "Dry Week"
-  }
+  // ================= TREND =================
 
   const getTrendDirection = () => {
     if (!forecast.length) return "";
@@ -247,6 +253,14 @@ const Forecast = () => {
     return temps[temps.length - 1] > temps[0]
       ? "📈 Rising Trend"
       : "📉 Falling Trend";
+  };
+
+  const getRainTrend = () => {
+    const rainy = forecast.filter(f => f.pop > 60).length;
+
+    if (rainy >= 3) return "Rainy Week";
+    if (rainy > 0) return "Mixed Weather";
+    return "Dry Week";
   };
 
   const getStabilityScore = () => {
@@ -277,154 +291,156 @@ const Forecast = () => {
 
       {/* HEADER */}
       <div className="forecast-header">
-        <button onClick={()=>navigate("/weather")} className="back-btn">← Back</button>
-        <h2 className="title"><b>5 - Day Forecast - {city}</b></h2>
-        {alerts && <div className="alert">{alerts}</div>}
+        <button onClick={()=>navigate("/weather")} className="back-btn"> ← Back</button>
+        <h1 className="title">5 - Day Forecast - {city}</h1>
+        {alerts && <div className="alert-badge">{alerts}</div>}
       </div>
 
-      {/* CARDS WITH HOURLY */}
-      <div className="forecast-grid">
-        {forecast.map((day, i) => {
-
-          const active = selectedDay === day.dt_txt
-
-          return (
+      {/* HERO */}
+      <div className="top-section">
+        <div className="forecast-grid">
+          
+        {/* CARDS */}
+          {forecast.map((day, i) => (
             <div
               key={i}
-              className={`forecast-card ${active ? "active" : ""}`}
-              onClick={() => setSelectedDay(active ? null : day.dt_txt)}
+              className={`forecast-card 
+                ${getTempClass(day.temp)} 
+                ${selectedDay === day.dt_txt ? "active" : ""}
+                ${bestDay?.dt_txt === day.dt_txt ? "best-day" : ""}`}
+              onClick={() => setSelectedDay(day.dt_txt)}
             >
-              {/* DAY */}
               <p className="day">
-                {day.isToday
-                  ? "Today"
-                  : new Date(day.dt_txt).toLocaleDateString("en-US", {
-                      weekday: "short"
-                    })}
+                {day.isToday ? "Today" :
+                  new Date(day.dt_txt).toLocaleDateString("en-US",{weekday:"short"})}
               </p>
 
-              {/* ICON */}
-              <img
-                src={`https://openweathermap.org/img/wn/${day.weather[0]?.icon || "01d"}@2x.png`}
-                alt=""
-              />
+              <img src={`https://openweathermap.org/img/wn/${day.weather[0]?.icon}@2x.png`} alt="" />
 
-              {/* TEMP */}
               <h3>{Math.round(day.temp)}°C</h3>
+              <p className="feels">Feels like {Math.round(day.temp + 1)}°C</p>
 
-              {/* MIN / MAX (approx since avg used) */}
               <p className="minmax">
-                ↓ {Math.round(day.min)}° | ↑ {Math.round(day.max)}°
+                ↓ {Math.round(day.min)}° || ↑ {Math.round(day.max)}°
               </p>
-
-              {/* RAIN % (not available → fallback 0) */}
-              <p className="rain">☁ {day.pop}% </p>
-
-              {/* RATING */}
-              <p className="rating">
-                ⭐ {Math.min(10, Math.round(day.temp / 3))}/10
-              </p>
-
-              {/* HOURLY STRIP */}
-              {active && (
-              <div className="hourly-wrapper">
-                <div className="hourly-strip">
-                  {hourlyData[day.dt_txt]?.slice(0,6).map((h, j) => (
-                    <div key={j} className="hour-box">
-                      <p>{h.time}</p>
-                      <span>{Math.round(h.temp)}°</span>
-                      <span>☁ {h.pop}%</span>
-                    </div>
-                  ))}
-                </div>
-                </div>
-              )}
             </div>
-          )
-        })}
-      </div>
-
-      {/* INSIGHT STRIP */}
-      <div className="insight-strip">
-
-        <div className="box">
-          <p><b>Temperature Analysis--</b></p>
-          <p>🌡 Avg: {avgTemp}°C</p>
-          <p>🔥 Max: {maxTemp}°C</p>
-          <p>❄ Min: {minTemp}°C</p>
+          ))}
         </div>
 
-        <div className="box">
-          <p><b>According to WeatherWise-- </b></p>
-          <p>  .</p>
-          {bestDay && <p>🌟Best Weather Day: {new Date(bestDay.dt_txt).toLocaleDateString("en-US",{weekday:"long"})}</p>}
-          {worstDay && <p> ⚠ Worst Weather Day: {new Date(worstDay.dt_txt).toLocaleDateString("en-US",{weekday:"long"})}</p>}
-        </div>
-
-        <div className="box">
-          <p><b>💡 Advice </b></p>
-          <ul className="advice-list">
-            {getSmartAdvice().map((tip, i) => (
-              <li key={i}>{tip}</li>
-            ))}
-          </ul>
-        </div>
-
-      </div>
-
-      {/* ================= BOTTOM SECTION ================= */}
-      <div className="bottom-section">
-
-        {/* LEFT - SUMMARY */}
         <div className="summary-card">
-          <h3><em>🌍 Weekly Summary</em></h3>
-          <p>{getSummary()}</p>
+          <h3>🌍 Weekly Summary</h3>
+          <p>{getAIInsight()}</p>
+        </div>  
+      </div>
 
-          <div className="insight">
-            🤖 Weather insight: Conditions remain stable with moderate variations.
+
+      {/* HOURLY PANEL */}
+      {selectedDay && (
+        <div className="hourly-panel">
+          <h3>Hourly Forecast</h3>
+          <div className="hourly-container">
+            {hourlyData[selectedDay]?.map((h,i)=>(
+              <div key={i} className="hour-card">
+                <p>{h.time}</p>
+                <h4>{Math.round(h.temp)}°</h4>
+                <p>☁ {h.pop}%</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+    {/* INSIGHTS SECTION (NEW) */}
+    <h2 className="section-title">🧠 Insights</h2>
+
+      <div className="insights-wrapper">
+
+        {/* LEFT - HIGHLIGHTS */}
+        <div className="highlights-card">
+          <h3>🌟 Highlights</h3>
+
+          <div className="highlights-grid">
+            <div className="stat">
+              <span className="label">Avg</span>
+              <span className="value">{avgTemp}°C</span>
+            </div>
+
+            <div className="stat">
+              <span className="label">Max</span>
+              <span className="value">{maxTemp}°C</span>
+            </div>
+
+            <div className="stat">
+              <span className="label">Min</span>
+              <span className="value">{minTemp}°C</span>
+            </div>
+
+            <div className="stat">
+              <span className="label">Best</span>
+              <span className="value">
+                {bestDay && new Date(bestDay.dt_txt).toLocaleDateString("en-US",{weekday:"long"})}
+              </span>
+            </div>
+
+            <div className="stat">
+              <span className="label">Worst</span>
+              <span className="value">
+                {worstDay && new Date(worstDay.dt_txt).toLocaleDateString("en-US",{weekday:"long"})}
+              </span>
+            </div>
+          </div>
+
+          {/* Progress */}
+          <div className="progress-wrapper">
+            <span className="progress-label">Weekly Stability</span>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${getStabilityScore() * 10}%` }}
+              />
+            </div>
           </div>
         </div>
 
-        {/* RIGHT - GRID */}
-        <div className="extras-grid">
+        {/* RIGHT - METRICS */}
+        <div className="metrics-grid">
 
-          <div className="extra-box">
-            <h4><big>📊 Comfort</big></h4>
-            <p>{getComfortScore()}/10</p>
+          <div className="metric-card">
+            <p>📊 Comfort</p>
+            <h4>{getComfortScore()}/10</h4>
           </div>
 
-          <div className="extra-box">
-            <h4><big>📅 Plan Day</big></h4>
-            <p>{getPlanDay()}</p>
+          <div className="metric-card">
+            <p>📅 Plan Day</p>
+            <h4>{getPlanDay()}</h4>
           </div>
 
-          <div className="extra-box">
-            <h4><big>☁ Trend</big></h4>
-            <p>{getRainTrend()}</p>
+          <div className="metric-card">
+            <p>☁ Trend</p>
+            <h4>{getRainTrend()}</h4>
           </div>
 
-          <div className="extra-box">
-            <h4><big>📊 Trend</big></h4>
-            <p>{getTrendDirection()}</p>
+          <div className="metric-card">
+            <p>📈 Direction</p>
+            <h4>{getTrendDirection()}</h4>
           </div>
 
-          <div className="extra-box">
-            <h4><big>⚖ Stability</big></h4>
-            <p>{getStabilityScore()}/10</p>
+          <div className="metric-card">
+            <p>⚖ Stability</p>
+            <h4>{getStabilityScore()}/10</h4>
           </div>
 
-          <div className="extra-box">
-            <h4><big>⚠ Risk</big></h4>
-            <p>{getRiskLevel()}</p>
+          <div className="metric-card">
+            <p>⚠ Risk</p>
+            <h4>{getRiskLevel()}</h4>
           </div>
 
         </div>
 
       </div>
-
-  
 
       {/* GRAPHS */}
+      <h2 className="section-title">📊 Analytics</h2>
       <div className="graph-grid">
 
         <div className="graph">
@@ -441,32 +457,34 @@ const Forecast = () => {
             >
               <defs>
                 <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#00e0ff" stopOpacity={0.8}/>
-                  <stop offset="100%" stopColor="#00e0ff" stopOpacity={0}/>
+                  <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.9}/>
+                  <stop offset="100%" stopColor="#38bdf8" stopOpacity={0}/>
                 </linearGradient>
               </defs>
 
-              <CartesianGrid stroke="rgba(255,255,255,0.1)" />
+              <CartesianGrid stroke="rgba(255,255,255,0.08)" />
 
-              <XAxis dataKey="day" stroke="#ccc"/>
-              <YAxis stroke="#ccc"/>
+              <XAxis dataKey="day" stroke="#94a3b8"/>
+              <YAxis stroke="#94a3b8"/>
 
               <Tooltip content={<CustomTooltip />} />
 
               <Area
                 type="monotone"
                 dataKey="temp"
-                stroke="#00e0ff"
+                stroke="#38bdf8"
                 fill="url(#tempGradient)"
                 strokeWidth={3}
+                isAnimationActive={true}
+                animationDuration={1200}
                 dot={(props) => {
-                  const { cx, cy } = props
+                  const { cx, cy, index } = props
                   return (
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={4}
-                      fill="#00e0ff"
+                      r={index === activeIndex ? 6 : 3}
+                      fill={index === activeIndex ? "#22d3ee" : "#38bdf8"}
                     />
                   )
                 }}
@@ -476,7 +494,7 @@ const Forecast = () => {
         </div>
 
         <div className="graph">
-          <h4>Humidity</h4>
+          <h4>Temperature Bars</h4>
           <ResponsiveContainer height={220}>
             <BarChart
               data={chartData}
@@ -487,15 +505,15 @@ const Forecast = () => {
               }}
               onMouseLeave={() => setActiveIndex(null)}
             >
-              <CartesianGrid stroke="rgba(255,255,255,0.1)" />
+              <CartesianGrid stroke="rgba(255,255,255,0.08)" />
 
-              <XAxis dataKey="day" stroke="#ccc"/>
-              <YAxis stroke="#ccc"/>
+              <XAxis dataKey="day" stroke="#94a3b8"/>
+              <YAxis stroke="#94a3b8"/>
 
               <Tooltip content={<CustomTooltip />} />
 
-              <Bar dataKey="temp">
-                {chartData?.map((entry, index) => (
+              <Bar dataKey="temp" radius={[8, 8, 0, 0]}>
+                {chartData.map((entry, index) => (
                   <Cell
                     key={index}
                     fill={index === activeIndex ? "#22d3ee" : "#38bdf8"}
@@ -515,8 +533,11 @@ const Forecast = () => {
               <Pie
                 data={pieData}
                 dataKey="value"
-                outerRadius={70}
-                innerRadius={40}
+                outerRadius={80}
+                innerRadius={45}
+                paddingAngle={3}
+                isAnimationActive={true}
+                animationDuration={1200}
               >
                 {pieData.map((entry, index) => (
                   <Cell
@@ -532,7 +553,6 @@ const Forecast = () => {
         </div>
 
       </div>
-
 
     </div>
   )
