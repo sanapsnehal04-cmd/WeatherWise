@@ -50,6 +50,7 @@ button:hover {
 button:active {
   transform: scale(0.96);
 }
+
 /* ==============================
    Header
 ============================== */
@@ -142,15 +143,10 @@ button:active {
   border-radius: 10px;
   background: linear-gradient(90deg, #60a5fa, #2563eb);
 }
-/* ==============================
-   Bottom Section
-============================== */
-.bottom-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
 
+/* ==============================
+   Table + Alerts Container
+============================== */
 .table-card,
 .alert-card-container {
   background: #1e293b;
@@ -201,7 +197,6 @@ button:active {
   box-shadow: 0 0 0 1px #3b82f6;
 }
 
-/* Button */
 .alert-form.modern button {
   background: linear-gradient(135deg, #052455, #244181);
   align-items: center;
@@ -237,7 +232,9 @@ button:active {
   align-items: center;
 }
 
-/* INSIGHTS */
+/* ==============================
+   INSIGHTS
+============================== */
 .insights-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -266,7 +263,9 @@ button:active {
   opacity: 0.6;
 }
 
-/* MINI ANALYTICS */
+/* ==============================
+   MINI ANALYTICS
+============================== */
 .mini-analytics {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -280,7 +279,9 @@ button:active {
   border-radius: 12px;
 }
 
-/* RECENT ACTIVITY */
+/* ==============================
+   RECENT ACTIVITY
+============================== */
 .recent-activity {
   margin-top: 20px;
   background: rgba(255,255,255,0.05);
@@ -296,17 +297,18 @@ button:active {
   justify-content: space-between;
 }
 
+/* Hover Effects */
 .chart-card:hover,
 .stat-card:hover,
 .table-card:hover {
   transform: translateY(-3px);
 }
+
 /* ==============================
    Responsive
 ============================== */
 @media (max-width: 900px) {
-  .charts-grid,
-  .bottom-grid {
+  .charts-grid {
     grid-template-columns: 1fr;
   }
 
