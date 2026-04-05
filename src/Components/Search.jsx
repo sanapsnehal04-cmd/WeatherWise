@@ -43,6 +43,29 @@ const Search = () => {
 
     setSuggestions([]);
     navigate(`/weather?city=${trimmedCity}`);
+    saveSearch(trimmedCity);
+  };
+
+  const saveSearch = async (city) => {
+    try {
+      const user_id = localStorage.getItem("user_id");
+
+      if (!user_id) return;
+
+      await fetch("http://localhost/weather-backend/api/saveSearch.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id,
+          city,
+        }),
+      });
+
+    } catch (err) {
+      console.log("Error saving search");
+    }
   };
 
   // ==============================
@@ -132,6 +155,7 @@ const Search = () => {
                   setCity(item);
                   setSuggestions([]);
                   navigate(`/weather?city=${item}`);
+                  saveSearch(item);
                 }}
               >
                 {item}

@@ -2,86 +2,39 @@
    Navbar Base
 ========================================= */
 
-
-
-/* .navbar {
-  
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 12px 25px;
-
-  backdrop-filter: blur(10px);
-  background: rgba(61, 123, 126, 0.85);
-  color: white;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-} */
-*{
-  font-size: x-large;
-}
-
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 16px 40px; /* ⬆ increased spacing */
-
-  backdrop-filter: blur(12px);
-  background: rgba(61, 123, 126, 0.9);
-  color: white;
-
-  font-size: 18px; /* 🔥 base font increased */
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  padding: 14px 32px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
 }
 
-.navbar .nav-title  {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-
-
-
-/* =========================================
-   🌤 Title
-========================================= */
-
-/* .nav-title {
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-} */
 .nav-title {
-    cursor: pointer;
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    transition: all 0.3s ease;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
 
-.nav-title:hover {
-  opacity: 0.9;
-  text-shadow: 0 0 8px rgba(255,255,255,0.4);
+  margin-left: 8px; 
 }
-
 
 /* =========================================
    🔗 Navigation Links
@@ -89,46 +42,47 @@
 
 .nav-links {
   display: flex;
-  gap: 25px;
+  gap: 22px;
 }
 
 .nav-links span {
   cursor: pointer;
-  position: relative;
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #252b35;
   transition: all 0.25s ease;
 }
 
-/* Hover underline */
-.nav-links span::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: #cce7ff;
-  transition: 0.3s ease;
+.nav-links span svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
 }
 
 .nav-links span:hover::after {
   width: 100%;
+  left: 0;
 }
 
 .nav-links span:hover {
-  color: #cce7ff;
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
 }
 
-
-/* ✅ Active Link */
 .nav-links .active {
-  color: #cce7ff;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  box-shadow: 0 4px 14px rgba(59,130,246,0.4);
 }
 
 .nav-links .active::after {
   width: 100%;
 }
-
 
 /* =========================================
    👤 User Section
@@ -137,61 +91,215 @@
 .nav-user {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  padding-left: 16px;
+}
+
+.nav-user span {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.nav-user span:hover {
+  color: #cce7ff;
 }
 
 /* User email box */
 .user-box {
-  background: rgba(255,255,255,0.12);
-  padding: 5px 12px;
-  border-radius: 20px;
-  backdrop-filter: blur(5px);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.05);
 }
 
-.user-text {
-  font-size: 13px;
-  opacity: 0.95;
+.user-email {
+  font-size: 16px;
+  font-weight: 500;
 }
-
 
 /* =========================================
    🔴 Logout Button
 ========================================= */
 
 .logout-btn {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(45deg, #ff4d4d, #ff1a1a);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
-
+  border: none;
+  border-radius: 8px;
   font-weight: 500;
-  letter-spacing: 0.3px;
-
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .logout-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(45deg, #ff1a1a, #cc0000);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(239,68,68,0.4);
 }
 
 .logout-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
-
 
 /* =========================================
    🌙 Dark Mode
 ========================================= */
 
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(0,0,0,0.06);
+  color: #111;
+  flex-shrink: 0; 
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(59,130,246,0.15);
+  transform: scale(1.05);
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.theme-switch svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: #e5e7eb;
+  border-radius: 999px;
+
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+
+  position: absolute;
+  height: 22px;
+  width: 22px;
+
+  left: 3px;
+  bottom: 3px;
+
+  background: white;
+  border-radius: 50%;
+
+  transition: 0.3s;
+}
+
+.theme-switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sun {
+  left: 6px;
+  color: #facc15;
+  width: 14px;
+  height: 14px;
+}
+
+
+.moon {
+  right: 6px;
+  color: #60a5fa;
+  width: 14px;
+  height: 14px;
+}
+
+
+.theme-switch input:checked + .slider .sun {
+  opacity: 0;
+}
+
+.theme-switch input:checked + .slider .moon {
+  opacity: 1;
+}
+
+.theme-switch input:not(:checked) + .slider .moon {
+  opacity: 0;
+}
+
+.theme-switch input:not(:checked) + .slider .sun {
+  opacity: 1;
+}
+
+
+
+
+body.dark .theme-toggle {
+  background: rgba(255,255,255,0.08);
+  color: #facc15;
+}
+
+.theme-toggle:hover svg {
+  filter: drop-shadow(0 0 6px rgba(59,130,246,0.6));
+}
+
+body.dark .slider {
+  background: #1e293b;
+}
+
 body.dark .navbar {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.75);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+body.dark .nav-user {
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+
+body.dark .nav-links span {
+  color: #cbd5f5;
 }
 
 body.dark .nav-links span:hover {
-  color: #60a5fa;
+  background: rgba(255,255,255,0.08);
 }
 
 body.dark .nav-links span::after {
@@ -199,6 +307,7 @@ body.dark .nav-links span::after {
 }
 
 body.dark .nav-links .active {
+  background: rgba(96,165,250,0.18);
   color: #60a5fa;
 }
 
@@ -209,7 +318,6 @@ body.dark .user-box {
 body.dark .logout-btn {
   background: linear-gradient(45deg, #dc2626, #b91c1c);
 }
-
 
 /* =========================================
    📱 Responsive Design
@@ -238,8 +346,9 @@ body.dark .logout-btn {
   }
 
   .nav-user {
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
 }

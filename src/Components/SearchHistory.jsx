@@ -162,6 +162,14 @@ const SearchHistory = () => {
         </span>
       </div>
 
+      {/* Back Button */}
+      <button
+        className="searchHistory-btn back-btn"
+        onClick={goBackToWeather}
+      >
+        ⬅ Back to Weather
+      </button>
+
       {/* Loading */}
       {loading ? (
 
@@ -246,14 +254,6 @@ const SearchHistory = () => {
           </button>
         </>
       )}
-
-      {/* Back Button */}
-      <button
-        className="searchHistory-btn back-btn"
-        onClick={goBackToWeather}
-      >
-        ⬅ Back to Weather
-      </button>
 
       {/* Dark Mode */}
       <div className="mode-toggle">
